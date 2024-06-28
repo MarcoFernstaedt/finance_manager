@@ -13,7 +13,7 @@ def index():
 def register():
     username = request.json['username']
     password = request.json['password']
-    hashed_password = generate_password_hash(password, method='sha256')
+    hashed_password = generate_password_hash(password)
     user = User(username=username, password=hashed_password)
     db.session.add(user)
     db.session.commit()
@@ -23,9 +23,9 @@ def register():
 def login():
     data = request.json
     username = data.get('username')
-    password = data.get('pasword')
+    password = data.get('password')
     user = User.query.filter_by(username=username).first()
-    if user and checked_password_hash(user.password, password):
+    if user and check_password_hash(user.password, password):
         login_user(user)
         return jsonify({"message": "Logged in successfully"})
     return jsonify({"error": "username or password is incorrect"})
@@ -49,7 +49,7 @@ def add_expense():
     return jsonify({"message": "Expense added successfully"})
 
 @app.route('/expenses', methods=['GET'])
-@login_requried
+@login_required
 def get_expenses():
     user_id = current_user.id
     expenses = Expense.query.filter_by(user_id=user_id).all()
