@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+
+# SQLite database
+*.db
+
+# Environment variables
+.env
+
+# Pytest
+.pytest_cache/
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
